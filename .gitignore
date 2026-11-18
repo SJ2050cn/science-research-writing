@@ -1,0 +1,10 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/
+
+# Author's style profile: created on first save, never shipped
+user-style.md
