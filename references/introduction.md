@@ -31,22 +31,22 @@ Allowed variations: a very narrow field with an expert readership may open with 
 
 ### Mirror with the Discussion
 The Discussion reverses the Introduction, so keep every Introduction promise answerable there and in the Conclusion.
-- Introduction, wide to narrow: field or topic, existing research, the gap, your study.
-- Discussion, narrow to wide: your study revisited, your response to the gap, your results mapped onto existing research, your contribution to the field.
-- The end of the Introduction leads the reader into the central sections; the end of the central sections leads into the Discussion.
+- **Introduction runs wide to narrow.** Introduction, wide to narrow: field or topic, existing research, the gap, your study.
+- **Discussion runs narrow to wide.** Discussion, narrow to wide: your study revisited, your response to the gap, your results mapped onto existing research, your contribution to the field.
+- **Lead into the central sections.** The end of the Introduction leads the reader into the central sections; the end of the central sections leads into the Discussion.
 
 ## 2. Tense and voice
 The general tense rules are in the language reference. For the Introduction:
-- First sentence about recent activity: Present Perfect. About the current situation: Present Simple. For a lasting text, prefer a dated anchor to "recently".
-- Established background facts: Present Simple. A fact starts as a finding (Past Simple), then Present Perfect, then Present Simple with a citation, and finally loses the citation. Check how recent articles treat it now; an outdated tense signals that you are not up to date.
-- Previous research, chosen by meaning:
+- **Opening sentence.** First sentence about recent activity: Present Perfect. About the current situation: Present Simple. For a lasting text, prefer a dated anchor to "recently".
+- **Established background tense.** Established background facts: Present Simple. A fact starts as a finding (Past Simple), then Present Perfect, then Present Simple with a citation, and finally loses the citation. Check how recent articles treat it now; an outdated tense signals that you are not up to date.
+- **Tense of previous research.** Previous research, chosen by meaning:
   - Past Simple ties a finding to that study. It also places a gap in the past, so a Past Simple gap reads as already closed.
   - Present Simple after a reporting verb presents the finding as reliable and established.
   - Present Perfect marks relevance now. It suits a current gap or ongoing research and implies the present paper addresses it.
   - A summary of current knowledge: Present Simple, usually with citations.
-- The present paper: Present Simple (this paper presents). The aim as a past intention: Past Simple; Present Simple also works, notably when the aim was only partly achieved.
-- Voice in move 4: we/our, the passive, or a non-human subject (this study demonstrates; Section 3 presents). Follow the target journal.
-- Word the gap impersonally and respectfully about earlier work.
+- **Tense of the present paper.** The present paper: Present Simple (this paper presents). The aim as a past intention: Past Simple; Present Simple also works, notably when the aim was only partly achieved.
+- **Voice in the last move.** Voice in move 4: we/our, the passive, or a non-human subject (this study demonstrates; Section 3 presents). Follow the target journal.
+- **Gap wording.** Word the gap impersonally and respectfully about earlier work.
 
 ## 3. Phrases by move
 - 1a significance: considerable interest in; widely used; has attracted much attention; plays a key role in; a central goal; increasingly popular; an emerging; great potential.
@@ -59,12 +59,12 @@ The general tense rules are in the language reference. For the Introduction:
 - 4 achievement words (only when the results show them): novel, robust, efficient, effective, simple, accurate, promising, practical, superior, valuable. A first-of-its-kind claim, such as to the best of our knowledge, needs a checked literature behind it.
 
 ## 4. Common pitfalls
-- Opening with your specific problem or method before readers have the background; jumping from very general to very specific, which loses interdisciplinary readers. Err slightly toward too much background.
-- Skipping the importance statement out of modesty when the target journal's articles make one, or forcing one into a narrow expert-readership paper. Re-check the opening when moving to a journal with a narrower or wider readership.
-- A literature review that reads as a shopping list: unordered, irrelevant or unlinked studies, or a back-and-forth of however / on the other hand. Every study must lead to the motivation, and a long review needs pruning.
-- No gap at all, a gap stated as a question, a gap with no signal word, or a gap the Discussion never answers. In revise mode, build the gap only from what the author's text shows; otherwise ask the author what the earlier work lacks.
-- Achievement words or first-ever claims (novel, superior, solves, proves) that the results do not support, and promises about all cases when the study covers one. Move the claim down the certainty continuum (language reference) and ask the author for the evidence.
-- Copying an older article's tense or citation habit for a fact that has since become established.
-- Vague this or it between gap and aim.
-- Excess method or result detail in the closing paragraph, or a closing paragraph that never says what the paper does.
-- Researchers' familiarity with the topic hiding how much the reader needs. Write for a reader, not a colleague.
+- **Opening with your own problem.** Opening with your specific problem or method before readers have the background; jumping from very general to very specific, which loses interdisciplinary readers. Err slightly toward too much background.
+- **Skipped importance statement.** Skipping the importance statement out of modesty when the target journal's articles make one, or forcing one into a narrow expert-readership paper. Re-check the opening when moving to a journal with a narrower or wider readership.
+- **Shopping-list literature review.** A literature review that reads as a shopping list: unordered, irrelevant or unlinked studies, or a back-and-forth of however / on the other hand. Every study must lead to the motivation, and a long review needs pruning.
+- **Missing or vague gap.** No gap at all, a gap stated as a question, a gap with no signal word, or a gap the Discussion never answers. In revise mode, build the gap only from what the author's text shows; otherwise ask the author what the earlier work lacks.
+- **Achievement words.** Achievement words or first-ever claims (novel, superior, solves, proves) that the results do not support, and promises about all cases when the study covers one. Move the claim down the certainty continuum (language reference) and ask the author for the evidence.
+- **Copied tense or citation habit.** Copying an older article's tense or citation habit for a fact that has since become established.
+- **Vague this or it.** Vague this or it between gap and aim.
+- **Detail in the closing move.** Excess method or result detail in the closing paragraph, or a closing paragraph that never says what the paper does.
+- **Hidden familiarity.** Researchers' familiarity with the topic hiding how much the reader needs. Write for a reader, not a colleague.

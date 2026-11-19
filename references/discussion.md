@@ -22,17 +22,17 @@ Order is fluid: higher moves tend to come early, lower ones late. Moves 3, 4 and
 Sometimes background facts in the Present Simple, with citations, appear late to support the final conclusions or recommendations. A strong closing sentence on applications or impact is common.
 
 Adapting to a journal
-- Label each sentence's function in 2-3 target Discussions, merge with this list, and record: the first sentence's function, deviations from the model, how much of the results is revisited, citation count and placement, and where limitations sit.
+- **Label sentence functions.** Label each sentence's function in 2-3 target Discussions, merge with this list, and record: the first sentence's function, deviations from the model, how much of the results is revisited, citation count and placement, and where limitations sit.
 
 ## 2. Tense and voice
-- Tense signals confidence (see the language reference). Judge from the data whether they are robust enough for Present Simple; copying target articles cannot settle it.
-- A phrase like "a key finding was / is / appears" changes strength with the tense. Check that the tense matches the power of the result.
-- Present Simple for background facts from the literature, including is known to.
-- When revisiting the aim, gap or method, reuse the earlier wording and tense. Keep the same words; a changed word makes the reader ask whether it is the same thing.
-- Modals carry most speculation, applications and recommendations (see the language reference).
-- Name the owner of each statement: your hypothesis, a known truth, or someone else's finding. Name the agent for your own claims (here, in this study, we).
-- Novelty claims need hedging (to our knowledge) and a literature search just before submission, repeated after review, since similar work may have appeared. If it has, state the similarities and differences instead of dropping the contribution.
-- Plans of your own are marked differently from invitations to others.
+- **Tense signals confidence.** Tense signals confidence (see the language reference). Judge from the data whether they are robust enough for Present Simple; copying target articles cannot settle it.
+- **Key finding phrasing.** A phrase like "a key finding was / is / appears" changes strength with the tense. Check that the tense matches the power of the result.
+- **Present for literature facts.** Present Simple for background facts from the literature, including is known to.
+- **Reuse earlier wording.** When revisiting the aim, gap or method, reuse the earlier wording and tense. Keep the same words; a changed word makes the reader ask whether it is the same thing.
+- **Modals carry speculation.** Modals carry most speculation, applications and recommendations (see the language reference).
+- **Name the owner.** Name the owner of each statement: your hypothesis, a known truth, or someone else's finding. Name the agent for your own claims (here, in this study, we).
+- **Hedge novelty claims.** Novelty claims need hedging (to our knowledge) and a literature search just before submission, repeated after review, since similar work may have appeared. If it has, state the similarities and differences instead of dropping the contribution.
+- **Mark your own plans.** Plans of your own are marked differently from invitations to others.
 
 ## 3. Phrases by move
 - Contribution and achievement: a first step towards; provides a framework for; to the best of our knowledge; succeeded in; enables; facilitates; robust, reliable, practical, accurate. Strong words (striking, remarkable, unprecedented) only for exceptional evidence.
@@ -47,18 +47,18 @@ Adapting to a journal
 - Citing openers: in line with this; consistent with the literature; in contrast, X reported; to verify this assumption; likewise.
 
 ## 4. Common pitfalls
-- No clear main contribution: the section wanders and the take-home message sinks into detail.
-- Results repeated without interpretation. The reverse error, never naming the key results, leaves interpretations without evidence.
-- Overstatement (clear, proves, must, in all, will solve) beyond what the results and literature support; a cause claimed from correlational data; advice stated as a result. Reviewers criticize the mismatch.
-- Overhedging to be safe, or several hedges on one claim, which undersells a firm result. Move up the continuum when the evidence is strong.
-- The "so what?" left open after a result: add suggesting that or which means that, so the reader gets the implication.
-- Achievement, contribution and impact stated vaguely or inconsistently (knowledge, research, real world). Make each explicit, with value words backed by the paper, and keep the message the same across Abstract, Introduction, Discussion and Conclusion.
-- Citations whose relevance is not stated, stacked together, or too few to map the study; the comparison with prior work skipped, so the contribution never separates from existing knowledge.
-- Novelty claims (first, largest, novel) with no recent literature check or no hedge.
-- Contradicting results mentioned but not explained, or surprises passed over.
-- Limitations or weaknesses hidden, or named with no way forward. Future work vague, or own plans mixed with invitations to others.
-- Changed wording or a different verb when revisiting the aim, gap or method.
-- Signal words (therefore, thus, in other words) used where the logic is not real; tense switched without reason.
-- Applications or impact forgotten, or added vaguely when they are the main value.
-- No widening at the end: the section stops on a detail instead of returning to the field, applications and future work.
-- Subtitles that do not match the content; keywords from the subtitle absent from the subsection's opening.
+- **No main contribution.** No clear main contribution: the section wanders and the take-home message sinks into detail.
+- **Results without interpretation.** Results repeated without interpretation. The reverse error, never naming the key results, leaves interpretations without evidence.
+- **Overstatement.** Overstatement (clear, proves, must, in all, will solve) beyond what the results and literature support; a cause claimed from correlational data; advice stated as a result. Reviewers criticize the mismatch.
+- **Overhedging.** Overhedging to be safe, or several hedges on one claim, which undersells a firm result. Move up the continuum when the evidence is strong.
+- **So what left open.** The "so what?" left open after a result: add suggesting that or which means that, so the reader gets the implication.
+- **Vague achievement and impact.** Achievement, contribution and impact stated vaguely or inconsistently (knowledge, research, real world). Make each explicit, with value words backed by the paper, and keep the message the same across Abstract, Introduction, Discussion and Conclusion.
+- **Citations without relevance.** Citations whose relevance is not stated, stacked together, or too few to map the study; the comparison with prior work skipped, so the contribution never separates from existing knowledge.
+- **Unchecked novelty claims.** Novelty claims (first, largest, novel) with no recent literature check or no hedge.
+- **Unexplained contradictions.** Contradicting results mentioned but not explained, or surprises passed over.
+- **Hidden limitations.** Limitations or weaknesses hidden, or named with no way forward. Future work vague, or own plans mixed with invitations to others.
+- **Changed wording on revisit.** Changed wording or a different verb when revisiting the aim, gap or method.
+- **Misused signal words.** Signal words (therefore, thus, in other words) used where the logic is not real; tense switched without reason.
+- **Forgotten applications.** Applications or impact forgotten, or added vaguely when they are the main value.
+- **No widening at the end.** No widening at the end: the section stops on a detail instead of returning to the field, applications and future work.
+- **Mismatched subtitles and keywords.** Subtitles that do not match the content; keywords from the subtitle absent from the subsection's opening.

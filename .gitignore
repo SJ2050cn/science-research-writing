@@ -8,3 +8,4 @@ Thumbs.db
 
 # Author's style profile: created on first save, never shipped
 user-style.md
+__pycache__/

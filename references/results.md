@@ -17,41 +17,41 @@ Four stages; the moves inside a stage repeat for each set of results.
 9. **Point to implications or applications.** Optional and brief. Open the path to the Discussion and echo the wording of the aim from the Introduction or Abstract.
 
 Layouts and subsections
-- Closing sections come in four layouts: Results / Discussion / Conclusion; Results / Discussion; combined Results and Discussion / Conclusion; Results / Conclusion. Some fields label the section Data Analysis or Case Study.
-- Combine Results and Discussion when early results shape later ones, or when each hypothesis reads best with its results and discussion together under subtitles. Keep them apart when the results will be discussed as a whole.
-- Check target articles for length, subsections, whether subtitles are full sentences, and what each subsection does. Subtitles must match their content, with keywords early.
+- **Closing layouts.** Closing sections come in four layouts: Results / Discussion / Conclusion; Results / Discussion; combined Results and Discussion / Conclusion; Results / Conclusion. Some fields label the section Data Analysis or Case Study.
+- **Combined Results and Discussion.** Combine Results and Discussion when early results shape later ones, or when each hypothesis reads best with its results and discussion together under subtitles. Keep them apart when the results will be discussed as a whole.
+- **Check target-journal layout.** Check target articles for length, subsections, whether subtitles are full sentences, and what each subsection does. Subtitles must match their content, with keywords early.
 
 Ordering
-- Moves 5-8 can cycle in each subsection, and a subsection can end on move 9.
-- Order graphics and text so the reader discovers the key result with you; foundation results can precede the most exciting one. Open with the method, the aim or the general pattern, whichever the target journal does.
-- Plan the order, subsections, headings and graphic positions before writing sentences.
-- Once results are final, check that the Introduction's aim matches what the study delivered.
+- **Moves can cycle.** Moves 5-8 can cycle in each subsection, and a subsection can end on move 9.
+- **Order graphics and text.** Order graphics and text so the reader discovers the key result with you; foundation results can precede the most exciting one. Open with the method, the aim or the general pattern, whichever the target journal does.
+- **Plan structure before drafting.** Plan the order, subsections, headings and graphic positions before writing sentences.
+- **Re-check the Introduction.** Once results are final, check that the Introduction's aim matches what the study delivered.
 
 Commentary
-- Results do not speak for themselves: the same two curves read as very similar or significantly different depending on the words. A bare number is judged high or low by each reader alone. Add an evaluation (word or framing) to nearly every key number; see the language reference for how.
-- Numbers can carry the evaluation (as many as versus only), or words can replace numbers.
-- Plain objective statements (higher than) are rarer than ones with a subjective add-on (slightly higher).
-- Pair a general claim with a typical case, not the single best one.
-- Keep evaluation within what the data support.
+- **Results need evaluation.** Results do not speak for themselves: the same two curves read as very similar or significantly different depending on the words. A bare number is judged high or low by each reader alone. Add an evaluation (word or framing) to nearly every key number; see the language reference for how.
+- **Numbers carry evaluation.** Numbers can carry the evaluation (as many as versus only), or words can replace numbers.
+- **Objective statements.** Plain objective statements (higher than) are rarer than ones with a subjective add-on (slightly higher).
+- **General claim with typical case.** Pair a general claim with a typical case, not the single best one.
+- **Evaluation within the data.** Keep evaluation within what the data support.
 
 Referring to figures and tables
-- Refer to every graphic, in the order you want it viewed, with a lead-in (Figure N shows; as can be seen in) or a parenthetical (Fig. N) after the result.
-- From a figure means the point is deduced from it; in a figure means it is visible there.
-- Verbs with the graphic as subject: shows, displays, illustrates, presents, summarizes, reveals, contains.
-- Use the journal's form (Fig. or Figure, supplementary labels) consistently, then say what the reader should notice.
+- **Refer to every graphic.** Refer to every graphic, in the order you want it viewed, with a lead-in (Figure N shows; as can be seen in) or a parenthetical (Fig. N) after the result.
+- **From a figure.** From a figure means the point is deduced from it; in a figure means it is visible there.
+- **Graphic as subject.** Verbs with the graphic as subject: shows, displays, illustrates, presents, summarizes, reveals, contains.
+- **Journal form for graphics.** Use the journal's form (Fig. or Figure, supplementary labels) consistently, then say what the reader should notice.
 
 Revising a Results paragraph that mixes in interpretation
-- Keep each number, unit, statistic and citation exactly as written.
-- Keep the findings, then separate the layers: report with evaluation, explanation of how a result arose, brief implication. Longer interpretation, literature mapping and speculation move to the Discussion; say so in the change list and ask the author where it should go.
-- Lower any interpretive wording the data do not carry; keep a firm verb where the data are firm.
+- **Keep numbers and citations.** Keep each number, unit, statistic and citation exactly as written.
+- **Separate the layers.** Keep the findings, then separate the layers: report with evaluation, explanation of how a result arose, brief implication. Longer interpretation, literature mapping and speculation move to the Discussion; say so in the change list and ask the author where it should go.
+- **Lower unsupported interpretation.** Lower any interpretive wording the data do not carry; keep a firm verb where the data are firm.
 
 ## 2. Tense and voice
-- Present Simple for what a graphic shows. Past Simple for how data were obtained and what was observed. Both often alternate in one paragraph.
-- Past Simple for findings of this study; Present Simple only where the evidence supports an established fact (see the language reference).
-- Background facts that explain a result: Present Simple for general properties, Past Simple for method choices.
-- Some Results are in Present Simple throughout, for example to describe what a model does. Check target articles.
-- The book gives no separate voice rule for Results. Follow the journal's articles and the author's profile on active we versus passive.
-- Calibrate tense and certainty together (found that x occurred versus occurs).
+- **Present for what a graphic shows.** Present Simple for what a graphic shows. Past Simple for how data were obtained and what was observed. Both often alternate in one paragraph.
+- **Past for this study's findings.** Past Simple for findings of this study; Present Simple only where the evidence supports an established fact (see the language reference).
+- **Background facts that explain.** Background facts that explain a result: Present Simple for general properties, Past Simple for method choices.
+- **All-present Results.** Some Results are in Present Simple throughout, for example to describe what a model does. Check target articles.
+- **Voice in Results.** The book gives no separate voice rule for Results. Follow the journal's articles and the author's profile on active we versus passive.
+- **Calibrate tense and certainty.** Calibrate tense and certainty together (found that x occurred versus occurs).
 
 ## 3. Phrases by move
 - Re-orient and method: in line with the aim of; to test whether; as noted above; using X, we measured.
@@ -64,15 +64,15 @@ Revising a Results paragraph that mixes in interpretation
 - Implications: these results suggest that; this indicates; this may provide a more accurate route to; it appears that.
 
 ## 4. Common pitfalls
-- Listing results in the order they happened, with no narrative or pattern.
-- Describing a figure or table without a judgment or a pointer, so the figure is left to explain itself.
-- Naked numbers, with no evaluation of size or meaning.
-- Equal space for every result, so key results do not stand out.
-- No graphic reference, or one that comes after the reader has read the result.
-- Skipping the method recap when the Methods are far away or in supplementary material.
-- Hiding problems, or leaving them to the Discussion's future-work paragraph.
-- Full interpretation, literature mapping and speculation here instead of a brief implication.
-- Commentary that goes beyond the data, or vague hedging that undermines your own results.
-- An Introduction aim that no longer matches the results presented.
-- Following a rule of thumb about what Results contain in place of the target journal's practice.
-- Changing, rounding or "improving" a number while editing.
+- **Chronological listing.** Listing results in the order they happened, with no narrative or pattern.
+- **Description without judgment.** Describing a figure or table without a judgment or a pointer, so the figure is left to explain itself.
+- **Naked numbers.** Naked numbers, with no evaluation of size or meaning.
+- **Equal space for all results.** Equal space for every result, so key results do not stand out.
+- **Missing or late graphic reference.** No graphic reference, or one that comes after the reader has read the result.
+- **Skipped method recap.** Skipping the method recap when the Methods are far away or in supplementary material.
+- **Hidden problems.** Hiding problems, or leaving them to the Discussion's future-work paragraph.
+- **Discussion content in Results.** Full interpretation, literature mapping and speculation here instead of a brief implication.
+- **Commentary beyond the data.** Commentary that goes beyond the data, or vague hedging that undermines your own results.
+- **Aim no longer matches.** An Introduction aim that no longer matches the results presented.
+- **Rule of thumb for content.** Following a rule of thumb about what Results contain in place of the target journal's practice.
+- **Changed numbers.** Changing, rounding or "improving" a number while editing.

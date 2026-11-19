@@ -15,10 +15,10 @@ General problems that cut across sections, used when reviewing. Section-specific
 - **Make the value explicit.** Results and data do not speak for themselves; say what they achieve, and keep that message consistent through the paper. Where no impact is obvious, say what the study adds. `"Error fell to 3%."` → `"Error fell to 3%, which makes the probe usable on small farms."`
 - **Link a jump from general to technical.** Especially at a subsection start. Add a sentence that connects, using overlap, This + noun, or a signal. `"Fouling limits membranes. We coated polyamide with TiO2."` → `"Fouling limits membranes. To reduce it, we coated polyamide with TiO2."`
 - **Give each item a narrative function.** The reader should see whether a sentence states a problem, a solution, or a positive or negative case. `"Sample B had a pH of 4.1."` → `"By contrast, sample B was acidic (pH 4.1)."`
-- **Answer "so what?"** at the end of a result or claim. `"The peak shifted by 4 nm."` → `"The peak shifted by 4 nm, which suggests that the film swelled."`
+- **Answer the so-what question.** At the end of a result or claim. `"The peak shifted by 4 nm."` → `"The peak shifted by 4 nm, which suggests that the film swelled."`
 - **State relevance.** Tell the reader why a sentence is there. `"Cells were counted twice."` → `"Cells were counted twice to check counting error."`
 - **Supply assumed knowledge.** Think of non-specialists, future readers and readers who skipped earlier sections. `"Gating followed the usual scheme."` → `"Gating, the step that selects cells by size, followed the usual scheme."`
-- Paragraph shape and subtitles: see the language reference and the section file.
+Paragraph shape and subtitles: see the language reference and the section file.
 
 ## Creating sentences
 - **Flag key points.** A short opener marks what matters; use it rarely. `"Error doubled at night."` → `"Notably, error doubled at night."`

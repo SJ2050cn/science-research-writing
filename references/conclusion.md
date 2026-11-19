@@ -19,24 +19,24 @@ The book gives a menu of components, not a fixed sequence. A short Conclusion co
 11. **Future directions.** Optional. Next steps or work in progress; usually last.
 
 Layouts and length
-- Four layouts occur: a Discussion followed by a separate Conclusion; no separate section, with the last one or two Discussion paragraphs doing the job; a combined Results and Discussion followed by a Conclusion; Results followed by one long Conclusion that opens like a Discussion and ends with Conclusion-style paragraphs.
-- For the first three, expect about 100-200 words in one or two short paragraphs, sometimes bullets. The fourth is much longer. Count the words in target-journal Conclusions and use their average.
-- Some journals add a Synopsis or Highlights. These overlap in content but never replace the Conclusion.
+- **Layouts.** Four layouts occur: a Discussion followed by a separate Conclusion; no separate section, with the last one or two Discussion paragraphs doing the job; a combined Results and Discussion followed by a Conclusion; Results followed by one long Conclusion that opens like a Discussion and ends with Conclusion-style paragraphs.
+- **Length for the first layouts.** For the first three, expect about 100-200 words in one or two short paragraphs, sometimes bullets. The fourth is much longer. Count the words in target-journal Conclusions and use their average.
+- **Synopsis or highlights.** Some journals add a Synopsis or Highlights. These overlap in content but never replace the Conclusion.
 
 Versus its neighbors
-- Abstract: a stand-alone summary for readers deciding whether to read on. The Conclusion paraphrases none of it.
-- Discussion: interprets the results at length against the literature. The Conclusion compresses that into outcome and impact, with no new interpretation and no new data.
-- Introduction: the Conclusion recalls the gap and aim only briefly, to show the gap was addressed.
-- Overlap in content is normal. The Conclusion's own job is the take-home message.
+- **Overlap with the Abstract.** Abstract: a stand-alone summary for readers deciding whether to read on. The Conclusion paraphrases none of it.
+- **Overlap with the Discussion.** Discussion: interprets the results at length against the literature. The Conclusion compresses that into outcome and impact, with no new interpretation and no new data.
+- **Overlap with the Introduction.** Introduction: the Conclusion recalls the gap and aim only briefly, to show the gap was addressed.
+- **Overlap is normal.** Overlap in content is normal. The Conclusion's own job is the take-home message.
 
 Ordering and variants
-- A typical run: achievement, results and evaluation, implications, advance in knowledge, future work. Components 1-5 are often merged into one opening sentence. Some Conclusions have only two or three components.
-- Choose the outcome and its impact rather than every result.
+- **Typical run.** A typical run: achievement, results and evaluation, implications, advance in knowledge, future work. Components 1-5 are often merged into one opening sentence. Some Conclusions have only two or three components.
+- **Choose outcome and impact.** Choose the outcome and its impact rather than every result.
 
 ## 2. Tense and voice
-- Present Perfect for what has been achieved or done; Present Simple for what the results imply or what the paper contains. Past Simple is less common and suits a brief restatement of a key step or result.
-- State which claims are this study's own. Writers know the project too well to see the ambiguity. A non-human subject with Present Simple reads as background or aim; see `references/language.md` (Voice and ownership) for the fixes. A start-up phrase naming the paper (`in this paper`, `the present study`, `from these results`) is a quick fix.
-- Modals and hedges belong to implications, applications and future work, scaled to the evidence (see the certainty continuum in the language reference). Results already shown take firm verbs.
+- **Present Perfect for achievements.** Present Perfect for what has been achieved or done; Present Simple for what the results imply or what the paper contains. Past Simple is less common and suits a brief restatement of a key step or result.
+- **Claim only your own.** State which claims are this study's own. Writers know the project too well to see the ambiguity. A non-human subject with Present Simple reads as background or aim; see `references/language.md` (Voice and ownership) for the fixes. A start-up phrase naming the paper (`in this paper`, `the present study`, `from these results`) is a quick fix.
+- **Modals for implications.** Modals and hedges belong to implications, applications and future work, scaled to the evidence (see the certainty continuum in the language reference). Results already shown take firm verbs.
 
 ## 3. Phrases by move
 1. What is in the paper: this paper reports; in the present study; we have described.
@@ -52,13 +52,13 @@ Ordering and variants
 11. Future directions: future work should; further research is under way to; the next step is to.
 
 ## 4. Common pitfalls
-- Copying or lightly rewording the Abstract, or lifting sentences from the Introduction or Discussion.
-- New results, data, citations or arguments that appear nowhere else in the paper.
-- Ambiguous ownership: a run of Present Simple, non-human-subject sentences that could pass for background.
-- Listing every result instead of choosing the outcome and impact.
-- No explicit statement of achievement, contribution and impact; or implications stated without the "so what" (this suggests that; which means that).
-- Overclaiming significance, generality or application beyond the data, or a tense that turns one study's finding into settled fact.
-- A vague closing (`more research is needed`) with no direction, or a fade-out limitation with no contribution statement.
-- Ignoring journal conventions on length, bullets, label, or whether the section exists.
-- Assuming the reader has read the whole paper.
-- In draft mode, a fact the notes lack (a number, a limitation, a future plan): write `[placeholder: ...]`, never infer it.
+- **Copied Abstract.** Copying or lightly rewording the Abstract, or lifting sentences from the Introduction or Discussion.
+- **New content.** New results, data, citations or arguments that appear nowhere else in the paper.
+- **Ambiguous ownership.** Ambiguous ownership: a run of Present Simple, non-human-subject sentences that could pass for background.
+- **Listing every result.** Listing every result instead of choosing the outcome and impact.
+- **No explicit achievement.** No explicit statement of achievement, contribution and impact; or implications stated without the "so what" (this suggests that; which means that).
+- **Overclaiming.** Overclaiming significance, generality or application beyond the data, or a tense that turns one study's finding into settled fact.
+- **Vague closing.** A vague closing (`more research is needed`) with no direction, or a fade-out limitation with no contribution statement.
+- **Ignored journal conventions.** Ignoring journal conventions on length, bullets, label, or whether the section exists.
+- **Assumed full reading.** Assuming the reader has read the whole paper.
+- **Draft fact missing from notes.** In draft mode, a fact the notes lack (a number, a limitation, a future plan): write `[placeholder: ...]`, never infer it.

@@ -20,19 +20,19 @@ The Title is the first element of the article and the only one most people read,
 8. **Match the promise to the paper.** Required. The title must not overstate. Predict from the title what the paper will deliver, then check the Abstract, Conclusion and body against it.
 
 Calibrating to readers
-- Specialized communities tolerate dense technical titles; interdisciplinary fields favor accessible, wide-impact ones.
-- Generic advice ("be informative", "be as short as possible") is vague or at odds with practice. Trust recent titles from the target journal and from similar-topic papers.
-- Test: put the title and keywords into a search engine and check whether the papers returned address your intended audience.
+- **Match the community.** Specialized communities tolerate dense technical titles; interdisciplinary fields favor accessible, wide-impact ones.
+- **Distrust generic advice.** Generic advice ("be informative", "be as short as possible") is vague or at odds with practice. Trust recent titles from the target journal and from similar-topic papers.
+- **Search test.** Test: put the title and keywords into a search engine and check whether the papers returned address your intended audience.
 
 Mapping method
-- For a target journal, tally how many of its titles use each feature in component 7, plus the noun and preposition counts, and copy the dominant pattern.
-- Offer several candidates that differ in form or emphasis, and say which achievement each foregrounds.
-- In review mode, compare the title with the Abstract and Conclusion and flag each promise the paper does not keep (a wider scope, a causal verb for correlational data, an application never tested).
+- **Tally target-journal features.** For a target journal, tally how many of its titles use each feature in component 7, plus the noun and preposition counts, and copy the dominant pattern.
+- **Offer candidate titles.** Offer several candidates that differ in form or emphasis, and say which achievement each foregrounds.
+- **Check promises in review.** In review mode, compare the title with the Abstract and Conclusion and flag each promise the paper does not keep (a wider scope, a causal verb for correlational data, an application never tested).
 
 ## 2. Tense and voice
-- Noun-phrase titles carry no tense. Participles and -ing forms can name methods (using, based on).
-- Sentence titles take Present Simple for established findings, which states the result as fact.
-- For tentative or early findings, add a modal (may, might, could, may contribute to). A modal must not hide a solid finding, and a bare Present Simple must not assert an unsure one. Causal verbs follow the certainty continuum in `references/language.md`.
+- **No tense in noun phrases.** Noun-phrase titles carry no tense. Participles and -ing forms can name methods (using, based on).
+- **Sentence titles in present.** Sentence titles take Present Simple for established findings, which states the result as fact.
+- **Modal for tentative findings.** For tentative or early findings, add a modal (may, might, could, may contribute to). A modal must not hide a solid finding, and a bare Present Simple must not assert an unsure one. Causal verbs follow the certainty continuum in `references/language.md`.
 
 ## 3. Phrases by move
 1. Outcome: a new method for; a tool for; a framework for; evidence for; X controls Y.
@@ -45,15 +45,15 @@ Mapping method
 8. Promise: may or might only when the paper itself is tentative.
 
 ## 4. Common pitfalls
-- Submitting the working title, which names the topic and not the outcome.
-- Using study of or investigation into as filler; the activity is not the value.
-- Treating "as short as possible" as a rule without checking comparable titles.
-- Noun stacks: only the last noun is the head and every earlier noun modifies it, so each addition hides the relations between terms and scatters the key message.
-- Preposition chains and prepositions with unclear scope. Replace them with an unambiguous verb or move the item to the keywords.
-- Overloading the title with every search keyword, so the central focus is unclear when scanning.
-- Acronyms known only inside the lab.
-- A keyword list that copies the title.
-- Overstating: a general result, application or impact the paper does not deliver, or a dropped hedge the findings need. Value words with no support in the paper.
-- A title built from one contribution when the paper's ranked contributions point elsewhere.
-- Copying title patterns without checking the target journal; colons, sentence titles and length are journal-dependent.
-- In draft mode, a title that needs a fact the author has not supplied (the method, the scope): ask or write `[placeholder: ...]`, never infer it.
+- **Working title as final.** Submitting the working title, which names the topic and not the outcome.
+- **Filler openers.** Using study of or investigation into as filler; the activity is not the value.
+- **Shortness as a rule.** Treating "as short as possible" as a rule without checking comparable titles.
+- **Noun stacks.** Noun stacks: only the last noun is the head and every earlier noun modifies it, so each addition hides the relations between terms and scatters the key message.
+- **Preposition chains.** Preposition chains and prepositions with unclear scope. Replace them with an unambiguous verb or move the item to the keywords.
+- **Keyword overload.** Overloading the title with every search keyword, so the central focus is unclear when scanning.
+- **Lab-only acronyms.** Acronyms known only inside the lab.
+- **Keywords copy the title.** A keyword list that copies the title.
+- **Overstating.** Overstating: a general result, application or impact the paper does not deliver, or a dropped hedge the findings need. Value words with no support in the paper.
+- **Single-contribution title.** A title built from one contribution when the paper's ranked contributions point elsewhere.
+- **Copying title patterns.** Copying title patterns without checking the target journal; colons, sentence titles and length are journal-dependent.
+- **Draft title needs a fact.** In draft mode, a title that needs a fact the author has not supplied (the method, the scope): ask or write `[placeholder: ...]`, never infer it.
