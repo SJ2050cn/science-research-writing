@@ -14,11 +14,11 @@ This agent skill drafts, revises and reviews a journal research article, one sec
 
 Install the skill in one of the two ways below, then start a new agent session.
 
-### Requirements
+### [Step 0] Requirements
 
 The skill needs Python 3.9 or later, with no extra packages. Without Python, it still works, and the agent does the checks by hand.
 
-### From GitHub with `npx skills`
+### [Step 1a] From GitHub with `npx skills`
 
 ```bash
 npx skills add SJ2050cn/science-research-writing -g
@@ -26,7 +26,7 @@ npx skills add SJ2050cn/science-research-writing -g
 
 The `-g` flag installs the skill globally for your user account (Claude Code, Codex and Antigravity), not for one project. Update it later with `npx skills update`.
 
-### From a local copy
+### [Step 1b] From a local copy
 
 Clone the skill, then link it into each agent's skills folder. Codex reads `~/.agents/skills` itself, so it needs no link.
 
@@ -38,7 +38,7 @@ ln -s ~/.agents/skills/science-research-writing ~/.gemini/config/skills/science-
 
 For a single project in Antigravity, place the skill in the repository's `.agents/skills/science-research-writing` folder instead. Update a local clone later with `git pull` in that folder.
 
-### Codex: install the Stop hook
+### [Step 1.1a] Codex only: install the Stop hook
 
 Claude Code gets the Stop hook from the skill itself. Codex needs one command. Use the path where you installed the skill:
 
@@ -48,7 +48,7 @@ python3 ~/.agents/skills/science-research-writing/scripts/install_codex_hook.py
 
 Then open `/hooks` in Codex and trust the hook. If you skip the command, the first Codex run offers to run it for you.
 
-### Antigravity: install the Stop hook
+### [Step 1.1b] Antigravity only: install the Stop hook
 
 Antigravity reads hooks from `~/.gemini/config/hooks.json`, not from `SKILL.md`. Run one command using the path where you installed the skill:
 
@@ -58,7 +58,7 @@ python3 ~/.agents/skills/science-research-writing/scripts/install_antigravity_ho
 
 No `/hooks` trust step is needed: Antigravity loads the hooks file automatically. If you skip the command, the first Antigravity run offers to run it for you.
 
-### Approve the engine's prompts
+### [Step 2] Approve the engine's prompts
 
 Your agent asks for your approval before the engine runs, and Codex asks again before the engine writes outside its sandbox. Approve these prompts. To stop repeat prompts, choose the option that remembers your answer.
 
