@@ -11,6 +11,8 @@ import os
 import shlex
 from pathlib import Path
 
+from . import hookfile
+
 ENV = "SCIENCE_RESEARCH_WRITING_CODEX_HOOKS"
 MARKER = "science-research-writing-guard"
 ENGINE = Path(__file__).resolve().parents[1] / "engine.py"
@@ -54,17 +56,6 @@ def installed():
         return False
 
 
-def _write(original, data):
-    p = hooks_path()
-    p.parent.mkdir(parents=True, exist_ok=True)
-    bak = p.with_name(p.name + ".bak")
-    if original is not None and not bak.exists():  # keep the first backup: it is the author's original
-        bak.write_bytes(original)
-    tmp = p.with_name(p.name + ".tmp")
-    tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    os.replace(str(tmp), str(p))
-
-
 def install():
     """Add (or refresh) our Stop hook. Returns True if the file changed."""
     original, data = _load()
@@ -76,7 +67,7 @@ def install():
     if not own:
         data["hooks"].setdefault("Stop", []).append(
             {"hooks": [{"type": "command", "command": command(), "timeout": 10}]})
-    _write(original, data)
+    hookfile.write_json_with_backup(hooks_path(), original, data)
     return True
 
 
@@ -91,7 +82,7 @@ def uninstall():
     data["hooks"]["Stop"] = [g for g in groups if g["hooks"]]
     if not data["hooks"]["Stop"]:
         del data["hooks"]["Stop"]
-    _write(original, data)
+    hookfile.write_json_with_backup(hooks_path(), original, data)
     return True
 
 
@@ -110,6 +101,10 @@ def main(argv):
         changed = install()
     except ValueError as e:
         print("error: %s" % e)
+        return 1
+    except OSError as e:
+        print("error: cannot access %s (%s); if a sandbox blocks writes outside the workspace, "
+              "rerun with non-workspace access approved" % (hooks_path(), e.strerror or e))
         return 1
     print("%s the guard hook %s %s." % ("Installed" if changed else "The guard hook is already installed;", "in" if changed else "nothing changed in", hooks_path()))
     if changed and hooks_path().with_name(hooks_path().name + ".bak").exists():

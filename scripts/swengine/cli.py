@@ -59,8 +59,11 @@ def cmd_abandon(args, root, data):
     _emit(run.Run.open(root, data).abandon())
 
 
-def cmd_guard(args, root, data):
-    sys.exit(guard.run(sys.stdin.read(), lambda project: run.Run.find(project, data)))
+def _read_guard_stdin():
+    try:
+        return sys.stdin.buffer.read().decode("utf-8") if hasattr(sys.stdin, "buffer") else sys.stdin.read()
+    except Exception:
+        return ""
 
 
 def cmd_profile(args, root, data):
@@ -87,7 +90,7 @@ def build_parser():
     s.add_argument("--preference", action="append", default=[],
                    help="a standing preference the author stated in the request, in their words (repeatable)")
     s.add_argument("--sample-file", action="append", default=[])
-    s.add_argument("--agent", default="other", choices=["claude", "codex", "other"])
+    s.add_argument("--agent", default="other", choices=["claude", "codex", "antigravity", "other"])
     sb = sub.add_parser("submit", help="submit the current step's result and print the next step")
     sb.add_argument("--file", required=True, help="JSON result file, or - for stdin")
     sb.add_argument("--run", help="run ID; default the open run")
@@ -95,7 +98,9 @@ def build_parser():
     st.add_argument("--run")
     sub.add_parser("resume", help="print the current step of the open run and clear a stall")
     sub.add_parser("abandon", help="close the open run without finishing it")
-    sub.add_parser("guard", help="Stop hook: read the hook JSON on stdin and block while a run is unfinished")
+    gd = sub.add_parser("guard", help="Stop hook: read the hook JSON on stdin and block while a run is unfinished")
+    gd.add_argument("--format", default="auto", choices=["auto", "claude", "antigravity"],
+                    help="hook protocol: auto (default), claude (Claude Code/Codex), or antigravity")
     pp = sub.add_parser("profile", help="write the style profile")
     act = pp.add_subparsers(dest="action", required=True)
     for name in ("add", "replace", "remove"):
@@ -111,11 +116,14 @@ def build_parser():
     return p
 
 
-COMMANDS = {"start": cmd_start, "submit": cmd_submit, "status": cmd_status, "resume": cmd_resume, "abandon": cmd_abandon, "guard": cmd_guard, "profile": cmd_profile}
+COMMANDS = {"start": cmd_start, "submit": cmd_submit, "status": cmd_status, "resume": cmd_resume, "abandon": cmd_abandon, "profile": cmd_profile}
 
 
 def main(argv=None):
     args = build_parser().parse_args(argv)
+    if args.command == "guard":
+        # Dispatch before project_root() and load_data() so every failure stays inside guard.run's fail-open boundary.
+        return guard.run(_read_guard_stdin(), lambda project: run.Run.find(project, run.load_data()), fmt=args.format)
     root = runstore.project_root(os.getcwd())
     try:
         COMMANDS[args.command](args, root, run.load_data())

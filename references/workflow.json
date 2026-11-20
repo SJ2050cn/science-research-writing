@@ -199,7 +199,7 @@
     "setup": {
       "kind": "setup",
       "read": [],
-      "instruction": "The guard hook that keeps Codex from ending a turn mid-run is not installed (it needs one entry in ~/.codex/hooks.json; the author's other hooks are kept and the file is backed up first). Ask the author whether to install it now, then wait for the answer. If yes, run context.command, tell the author to trust the hook in /hooks, and submit installed; the engine checks the hooks file. If no, submit declined: the run goes on without the guard and the plan line shows guard=off.",
+      "instruction": "The guard hook that keeps the agent from ending a turn mid-run is not installed (it needs one entry in context.hooks_file; the author's other hooks are kept and the file is backed up first). Ask the author whether to install it now, then wait for the answer. If yes, run context.command, follow context.post_install, and submit installed; the engine checks the hooks file. If no, submit declined: the run goes on without the guard and the plan line shows guard=off.",
       "expect": {
         "format": "json",
         "fields": {

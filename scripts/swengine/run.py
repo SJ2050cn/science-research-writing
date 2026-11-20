@@ -78,7 +78,7 @@ class Run:
         else:
             state, folder = profile_flows.start_task(task, agent, raw, root)
             run, main = cls(root, data, state, folder), state["step"]["id"]
-        run.state.update(notices=notices, preferences=preferences, main=main, pre=guard.pre_steps(agent) + pre)
+        run.state.update(notices=notices, preferences=preferences, main=main, pre=guard.pre_steps(agent, root) + pre)
         run.go(NEXT)
         run.save()
         return run

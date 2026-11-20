@@ -24,18 +24,19 @@ The skill needs Python 3.9 or later, with no extra packages. Without Python, it 
 npx skills add SJ2050cn/science-research-writing -g
 ```
 
-The `-g` flag installs the skill for your user account, not for one project. Update it later with `npx skills update`.
+The `-g` flag installs the skill globally for your user account (Claude Code, Codex and Antigravity), not for one project. Update it later with `npx skills update`.
 
 ### From a local copy
 
-Clone the skill, then link it into Claude Code's skills folder. Codex reads `~/.agents/skills` itself, so it needs no link.
+Clone the skill, then link it into each agent's skills folder. Codex reads `~/.agents/skills` itself, so it needs no link.
 
 ```bash
 git clone https://github.com/SJ2050cn/science-research-writing.git ~/.agents/skills/science-research-writing
-ln -s ~/.agents/skills/science-research-writing ~/.claude/skills/science-research-writing
+ln -s ~/.agents/skills/science-research-writing ~/.claude/skills/science-research-writing        # Claude Code
+ln -s ~/.agents/skills/science-research-writing ~/.gemini/config/skills/science-research-writing # Antigravity
 ```
 
-Update the copy later with `git pull` in that folder.
+For a single project in Antigravity, place the skill in the repository's `.agents/skills/science-research-writing` folder instead. Update a local clone later with `git pull` in that folder.
 
 ### Codex: install the Stop hook
 
@@ -47,9 +48,21 @@ python3 ~/.agents/skills/science-research-writing/scripts/install_codex_hook.py
 
 Then open `/hooks` in Codex and trust the hook. If you skip the command, the first Codex run offers to run it for you.
 
+### Antigravity: install the Stop hook
+
+Antigravity reads hooks from `~/.gemini/config/hooks.json`, not from `SKILL.md`. Run one command using the path where you installed the skill:
+
+```bash
+python3 ~/.agents/skills/science-research-writing/scripts/install_antigravity_hook.py
+```
+
+No `/hooks` trust step is needed: Antigravity loads the hooks file automatically. If you skip the command, the first Antigravity run offers to run it for you.
+
 ### Approve the engine's prompts
 
 Your agent asks for your approval before the engine runs, and Codex asks again before the engine writes outside its sandbox. Approve these prompts. To stop repeat prompts, choose the option that remembers your answer.
+
+In Antigravity, the terminal sandbox blocks access outside your workspace by default. Approve non-workspace prompts when the agent runs the engine from your global skill folder or reads and updates your style profile at `~/.agents/science-research-writing/user-style.md`. To avoid repeat prompts, allow them in Antigravity Settings (Non-Workspace File Access or Command Allowlist).
 
 ## Use
 
@@ -87,13 +100,13 @@ Run the uninstall script before you remove the skill:
 python3 ~/.agents/skills/science-research-writing/scripts/uninstall.py
 ```
 
-The script removes the Codex hook and asks whether to delete your style profile. The default keeps it. Outside a terminal, pass `--keep-profile` or `--remove-profile`. The run logs in your projects stay. At the end, the script prints the command that removes the skill. Run that command yourself.
+The script removes the Codex and Antigravity guard hooks and asks whether to delete your style profile. The default keeps it. Outside a terminal, pass `--keep-profile` or `--remove-profile`. The run logs in your projects stay. At the end, the script prints the command that removes the skill. Run that command yourself.
 
 ## What's inside
 
 - `SKILL.md`: the entry point the agent reads first.
 - `references/`: one file per section, plus files for language, the review checklist, target-journal models and style-profile rules, and `workflow.json`, the routing and output templates the engine reads.
-- `scripts/`: the step engine (`engine.py`), the Codex hook installer and the uninstall script.
+- `scripts/`: the step engine (`engine.py`), the Codex and Antigravity hook installers and the uninstall script.
 - `tests/`: `python3 -m unittest discover -s tests`.
 
 Each run's state, input, results, check report and output are kept in your project under `.agents/log/science-research-writing/<run id>/`. Git ignores that folder.

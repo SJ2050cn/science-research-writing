@@ -17,17 +17,45 @@ def section(text, title):
 class TestReadme(unittest.TestCase):
     def test_requirements_section(self):
         s = section(README, "Requirements")
-        for needle in ("python3 --version", "3.9", "apt", "dnf", "brew", "WSL"):
+        for needle in ("Python 3.9", "no extra packages", "by hand"):
             self.assertIn(needle, s)
+
+    def test_install_sections_cover_claude_codex_and_antigravity(self):
+        npx = section(README, "From GitHub with `npx skills`")
+        for needle in ("npx skills add SJ2050cn/science-research-writing -g", "Antigravity"):
+            self.assertIn(needle, npx)
+        local = section(README, "From a local copy")
+        for needle in (
+            "~/.agents/skills/science-research-writing",
+            "~/.claude/skills/science-research-writing",
+            "~/.gemini/config/skills/science-research-writing",
+            ".agents/skills/",
+        ):
+            self.assertIn(needle, local)
 
     def test_codex_section(self):
-        s = section(README, "Codex")
-        for needle in ("scripts/install_codex_hook.py", "--uninstall", "~/.codex/hooks.json", "/hooks", "read-only", ".agents/log"):
+        s = section(README, "Codex: install the Stop hook")
+        for needle in ("scripts/install_codex_hook.py", "/hooks", "first Codex run"):
             self.assertIn(needle, s)
 
-    def test_permissions_section(self):
-        s = section(README, "Permissions")
-        for needle in ("permissions", "allow", "Bash(python3 ", "scripts/engine.py *)", "allowed-tools"):
+    def test_antigravity_hook_section(self):
+        s = section(README, "Antigravity: install the Stop hook")
+        for needle in ("scripts/install_antigravity_hook.py", "~/.gemini/config/hooks.json", "first Antigravity run"):
+            self.assertIn(needle, s)
+        self.assertRegex(s, r"(?i)no\b[^.\n]*`/hooks`[^.\n]*trust")
+
+    def test_approve_prompts_section(self):
+        s = section(README, "Approve the engine's prompts")
+        for needle in (
+            "approval",
+            "Codex",
+            "sandbox",
+            "Antigravity",
+            "non-workspace",
+            "global skill folder",
+            "~/.agents/science-research-writing/user-style.md",
+            "Antigravity Settings",
+        ):
             self.assertIn(needle, s)
 
     def test_profile_section_names_the_new_location(self):
@@ -38,10 +66,18 @@ class TestReadme(unittest.TestCase):
 
     def test_uninstall_section_runs_the_script_before_removal(self):
         s = section(README, "Uninstall")
-        self.assertIn("scripts/uninstall.py", s)
-        for needle in ("--keep-profile", "--remove-profile", "npx skills remove science-research-writing -g", ".agents/log"):
+        for needle in (
+            "before you remove the skill",
+            "scripts/uninstall.py",
+            "Codex",
+            "Antigravity",
+            "--keep-profile",
+            "--remove-profile",
+            "run logs",
+            "prints the command that removes the skill",
+        ):
             self.assertIn(needle, s)
-        self.assertLess(s.index("uninstall.py"), s.index("npx skills remove"))
+        self.assertLess(s.index("uninstall.py"), s.index("prints the command that removes the skill"))
 
     def test_codex_reads_the_shared_skills_folder(self):
         self.assertNotIn("~/.codex/skills", README)
@@ -55,8 +91,10 @@ class TestSkillBody(unittest.TestCase):
         heads = re.findall(r"^## (.+)$", BODY, re.M)
         self.assertEqual(heads, ["Workflow", "Fallback", "Core principles", "Integrity rules"])
 
-    def test_start_names_the_agent_so_codex_gets_the_guard_offer(self):
-        self.assertRegex(BODY, r"--agent claude\|codex\|other")
+    def test_start_names_the_agent_so_codex_and_antigravity_get_the_guard_offer(self):
+        self.assertGreaterEqual(len(re.findall(r"--agent claude\|codex\|antigravity\|other", BODY)), 2)
+        self.assertNotRegex(BODY, r"--agent claude\|codex\|other")
+        self.assertRegex(BODY, r"(?i)`codex`[^.\n]*`antigravity`[^.\n]*`setup`")
 
     def test_fallback_tells_asks_and_marks_the_plan_line(self):
         s = section(BODY, "Fallback")

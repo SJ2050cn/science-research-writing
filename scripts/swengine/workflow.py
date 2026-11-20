@@ -78,6 +78,11 @@ def main_part(run):
     return f["mode"]
 
 
+def _routing_refs(run):
+    r, f = run.data["routing"], run.state["fields"]
+    return [str(SKILL_ROOT / n) for n in r["always"] + r["section"][f["section"]] + r["mode"][f["mode"]]]
+
+
 def read_files(run, tokens):
     state, files = run.state, []
     for t in tokens:
@@ -86,14 +91,11 @@ def read_files(run, tokens):
         elif t == "journal_model":
             files += [state["journal_model"]] if state["journal_model"] else []
         elif t == "routing":
-            r = run.data["routing"]
-            f = state["fields"]
-            names = r["always"] + r["section"][f["section"]] + r["mode"][f["mode"]]
-            files += [str(SKILL_ROOT / n) for n in names]
-            if profile.path().is_file():
+            files += _routing_refs(run)
+            if profile.exists():
                 files.append(str(profile.path()))
         elif t == "profile":
-            if profile.path().is_file():
+            if profile.exists():
                 files.append(str(profile.path()))
         elif t.startswith("skill:"):
             files.append(str(SKILL_ROOT / t[6:]))
@@ -133,7 +135,7 @@ def _accept_main(run, payload):
     try:
         text, report = modes.ingest(mode, payload, run.folder.input(), state["fields"]["markup"],
                                     state["exceptions"] + payload["exceptions"],
-                                    rules.known(read_files(run, ["routing"])))
+                                    rules.known(_routing_refs(run)))
     except ValueError as e:
         raise Malformed(str(e))
     # review: the findings JSON is itself the artifact; both files share one NN, so the text is stored first

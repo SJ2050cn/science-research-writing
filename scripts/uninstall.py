@@ -5,10 +5,11 @@
 
 Asks whether to delete your style profile (default: keep). Without a terminal, pass
 --keep-profile or --remove-profile; with neither, the profile is kept. Removes the
-guard hook from Codex's hooks.json (other hooks stay). Never touches project logs
-(.agents/log/ in your projects). Prints, never runs, the command that removes the skill:
-`npx skills remove science-research-writing -g` when the skills lock file lists it, else
-the `rm` commands for a local install. Python 3.9+, standard library only.
+guard hook from Codex's and Antigravity's hooks.json files (other hooks stay). Never
+touches project logs (.agents/log/ in your projects). Prints, never runs, the command
+that removes the skill: `npx skills remove science-research-writing -g` when the skills
+lock file lists it, else the `rm` commands for a local install. Python 3.9+, standard
+library only.
 """
 import argparse
 import json
@@ -18,7 +19,7 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from swengine import codexhook, profile  # noqa: E402
+from swengine import antigravityhook, codexhook, profile  # noqa: E402
 
 NAME = "science-research-writing"
 SKILL = Path(__file__).resolve().parents[1]
@@ -37,7 +38,9 @@ def removal_commands():
     if listed_in_lock():
         return ["npx skills remove %s -g" % NAME]
     cmds = []
-    for c in (Path.home() / ".claude" / "skills" / NAME, Path.home() / ".agents" / "skills" / NAME):
+    for c in (Path.home() / ".claude" / "skills" / NAME,
+              Path.home() / ".agents" / "skills" / NAME,
+              Path.home() / ".gemini" / "config" / "skills" / NAME):
         if c.is_symlink():
             cmds.append('rm "%s"' % c)
         elif c.exists() and c.resolve() != SKILL:
@@ -71,7 +74,13 @@ def main(argv):
         else:
             print("No terminal and no flag: keeping your profile at %s (pass --remove-profile to delete it)." % path)
 
-    print("Removed the Codex guard hook." if codexhook.uninstall() else "No Codex guard hook to remove.")
+    failed = False
+    for agent, hook in (("Codex", codexhook), ("Antigravity", antigravityhook)):
+        try:
+            print("Removed the %s guard hook." % agent if hook.uninstall() else "No %s guard hook to remove." % agent)
+        except (OSError, ValueError) as e:  # a broken hooks file must not stop the rest of the uninstall
+            print("error: could not remove the %s guard hook: %s" % (agent, e), file=sys.stderr)
+            failed = True
     if delete:
         gone = remove_profile()
         print("Deleted your style profile (%d file%s)." % (len(gone), "" if len(gone) == 1 else "s"))
@@ -81,7 +90,7 @@ def main(argv):
     print("To finish, remove the skill itself with:")
     for c in removal_commands():
         print("  " + c)
-    return 0
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":

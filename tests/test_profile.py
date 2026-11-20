@@ -445,5 +445,174 @@ class Study(ProfileCase):
         self.assertEqual(self.profile.read_text(), SEED)
 
 
+@unittest.skipIf(hasattr(os, "geteuid") and os.geteuid() == 0, "root ignores chmod permissions")
+class SandboxErrors(ProfileCase):
+    def lock(self, target, mode):
+        restore = 0o700 if target.is_dir() else 0o600
+        target.chmod(mode)
+        def _unlock(p=target, m=restore):
+            try:
+                p.chmod(m)
+            except FileNotFoundError:
+                pass
+        self.addCleanup(_unlock)
+
+    def assert_profile_sandbox_error(self, code, out, err):
+        self.assertEqual(code, 20, err)
+        self.assertIsNone(out)
+        self.assertIn(str(self.profile), err)
+        self.assertIn("outside", err.lower())
+        self.assertIn("sandbox", err.lower())
+        self.assertNotIn("traceback", err.lower())
+
+    def test_profile_commands_fail_cleanly_when_profile_dir_is_unwritable(self):
+        self.profile.parent.mkdir(parents=True)
+        self.lock(self.profile.parent, 0o555)
+        self.assert_profile_sandbox_error(*self.padd("Conventions", "Use the serial comma."))
+
+        self.profile.parent.chmod(0o700)
+        self.seed(OLD)
+        self.profile.parent.chmod(0o555)
+        self.assert_profile_sandbox_error(*self.run_engine(
+            "profile", "replace", "--old", "British spelling.", "--heading", "Conventions",
+            "--text", "American spelling.", "--source", "stated"))
+        self.assert_profile_sandbox_error(*self.run_engine("profile", "remove", "--line", "British spelling."))
+        self.assertEqual(self.profile.read_text(encoding="utf-8"), OLD)
+
+    def test_profile_add_fails_cleanly_when_parent_cannot_create_profile_dir(self):
+        ro_parent = self.base / "ro_parent"
+        ro_parent.mkdir()
+        self.lock(ro_parent, 0o555)
+        profile_dir = ro_parent / "profile"
+        env = dict(self.env, **{PROFILE_ENV: str(profile_dir)})
+        code, out, err = self.run_engine("profile", "add", "--heading", "Conventions",
+                                         "--text", "Use the serial comma.", "--source", "stated", env=env)
+        self.assertEqual(code, 20, err)
+        self.assertIsNone(out)
+        self.assertIn(str(profile_dir / "user-style.md"), err)
+        self.assertIn("outside", err.lower())
+        self.assertIn("sandbox", err.lower())
+        self.assertNotIn("traceback", err.lower())
+
+    def test_migration_fails_cleanly_when_profile_dir_is_unwritable(self):
+        self.seed(OLD, self.legacy)
+        self.profile.parent.mkdir(parents=True)
+        self.lock(self.profile.parent, 0o555)
+        self.assert_profile_sandbox_error(*self.start_section())
+        self.assertTrue(self.legacy.is_file())
+        self.assertFalse(self.profile.exists())
+        self.assertEqual(self.run_engine("status")[0], 4)  # no open run was created
+        self.assert_profile_sandbox_error(*self.padd("Conventions", "Use the serial comma."))
+        self.assertTrue(self.legacy.is_file())
+
+    def test_profile_conflict_resolution_fails_cleanly_when_profile_dir_is_unwritable(self):
+        self.seed(OLD, self.legacy)
+        self.seed(NEWER)
+        code, step, _ = self.start_section()
+        self.assertEqual((code, step["step"]["id"]), (0, "profile-conflict"))
+        self.lock(self.profile.parent, 0o555)
+        for choice in ("keep-profile", "use-in-folder"):
+            self.assert_profile_sandbox_error(*self.submit({"choice": choice}))
+            self.assertEqual(self.legacy.read_text(encoding="utf-8"), OLD)
+            self.assertEqual(self.profile.read_text(encoding="utf-8"), NEWER)
+            self.assertEqual(self.run_engine("status")[1]["step"]["id"], "profile-conflict")
+        self.profile.parent.chmod(0o700)
+        code, step, _ = self.submit({"choice": "keep-profile"})
+        self.assertEqual((code, step["step"]["id"]), (0, "revise"))
+
+    def test_save_preference_fails_cleanly_when_profile_dir_is_unwritable(self):
+        code, step, _ = self.start_section("--preference", "Use the serial comma")
+        self.assertEqual((code, step["step"]["id"]), (0, "save-preference"))
+        self.profile.parent.mkdir(parents=True)
+        self.lock(self.profile.parent, 0o555)
+        entry = {"heading": "Conventions", "text": "Use the serial comma.", "replaces": ""}
+        self.assert_profile_sandbox_error(*self.submit({"entries": [entry]}))
+        self.assertEqual(self.run_engine("status")[1]["step"]["id"], "save-preference")
+        # Validation refusals still return exit 5 (Malformed), not exit 20.
+        code, step, _ = self.submit({"entries": [{"heading": "Hobbies", "text": "x", "replaces": ""}]})
+        self.assertEqual((code, step["step"]["id"]), (5, "save-preference"))
+        self.profile.parent.chmod(0o700)
+        code, step, _ = self.submit({"entries": [entry]})
+        self.assertEqual((code, step["step"]["id"]), (0, "revise"))
+
+    def test_scan_profile_save_fails_cleanly_when_profile_dir_is_unwritable(self):
+        sample = self.proj / "sample.txt"
+        sample.write_text("We show. We show. We show.\n")
+        self.assertEqual(self.run_engine("start", "--task", "scan-profile", "--input", str(sample))[0], 0)
+        self.assertEqual(self.submit(Scan.PROPOSALS_NO_REPLACE)[0], 0)
+        self.profile.parent.mkdir(parents=True)
+        self.lock(self.profile.parent, 0o555)
+        self.assert_profile_sandbox_error(*self.submit({"approved": [1]}))
+        self.assertEqual(self.run_engine("status")[1]["step"]["id"], "ask")
+        self.profile.parent.chmod(0o700)
+        code, step, _ = self.submit({"approved": [1]})
+        self.assertEqual((code, step["step"]["id"]), (0, "done"))
+
+    def test_study_profile_save_fails_cleanly_when_profile_dir_is_unwritable(self):
+        self.seed(SEED)
+        self.assertEqual(self.run_engine("start", "--task", "study-profile")[0], 0)
+        restate = {
+            "entries": [{"entry": e, "restatement": "Restated: " + e, "flags": f, "question": "Clearer?" if f else ""}
+                        for e, f in Study.ENTRIES],
+            "changes": [{"entry": "British spelling. (stated, 2026-11-01)", "action": "remove", "heading": "",
+                         "text": "", "reason": "not needed"}],
+        }
+        self.assertEqual(self.submit(restate)[0], 0)
+        self.lock(self.profile.parent, 0o555)
+        self.assert_profile_sandbox_error(*self.submit({"approved": [1]}))
+        self.assertEqual(self.profile.read_text(encoding="utf-8"), SEED)
+        self.assertEqual(self.run_engine("status")[1]["step"]["id"], "ask")
+        self.profile.parent.chmod(0o700)
+        code, step, _ = self.submit({"approved": [1]})
+        self.assertEqual((code, step["step"]["id"]), (0, "done"))
+
+    def test_study_profile_start_fails_cleanly_when_profile_is_unreadable(self):
+        self.seed(SEED)
+        self.lock(self.profile, 0o000)
+        self.assert_profile_sandbox_error(*self.run_engine("start", "--task", "study-profile"))
+        self.assertEqual(self.run_engine("status")[0], 4)  # no open run was created
+
+    def test_unreadable_profile_dir_fails_cleanly_without_creating_a_run(self):
+        self.seed(SEED)
+        self.lock(self.profile.parent, 0o000)
+        self.assert_profile_sandbox_error(*self.run_engine("start", "--task", "study-profile"))
+        self.assertEqual(self.run_engine("status")[0], 4)
+        self.assert_profile_sandbox_error(*self.start_section())
+        self.assertEqual(self.run_engine("status")[0], 4)
+
+    def test_reading_profile_during_profile_steps_fails_cleanly_when_unreadable(self):
+        self.seed(SEED)
+        self.assertEqual(self.run_engine("start", "--task", "study-profile")[0], 0)
+        self.lock(self.profile, 0o000)
+        restate = {
+            "entries": [{"entry": e, "restatement": "Restated: " + e, "flags": f, "question": ""}
+                        for e, f in Study.ENTRIES],
+            "changes": [],
+        }
+        self.assert_profile_sandbox_error(*self.submit(restate))
+        self.assertEqual(self.run_engine("status")[1]["step"]["id"], "restate")
+        self.run_engine("abandon")
+        self.profile.chmod(0o600)
+
+        sample = self.proj / "sample.txt"
+        sample.write_text("We show. We show. We show.\n")
+        self.assertEqual(self.run_engine("start", "--task", "scan-profile", "--input", str(sample))[0], 0)
+        self.profile.chmod(0o000)
+        self.assert_profile_sandbox_error(*self.submit(Scan.PROPOSALS))
+        self.assertEqual(self.run_engine("status")[1]["step"]["id"], "propose")
+
+    def test_submitting_main_step_does_not_fail_when_profile_dir_is_unreadable(self):
+        self.seed(SEED)
+        code, step, err = self.start_section()
+        self.assertEqual((code, step["step"]["id"]), (0, "revise"), err)
+        rev = self.base / "rev.txt"
+        rev.write_text((self.proj / "a.txt").read_text(encoding="utf-8"), encoding="utf-8")
+        self.lock(self.profile.parent, 0o000)
+        code, next_step, err = self.submit({"text_file": str(rev), "exceptions": []})
+        self.assertEqual((code, next_step["step"]["id"]), (0, "report"), err)
+        code, done, err = self.submit({"changes": [], "questions": [], "conflicts": [], "deviations": []})
+        self.assertEqual((code, done["step"]["kind"]), (0, "done"), err)
+
+
 if __name__ == "__main__":
     unittest.main()

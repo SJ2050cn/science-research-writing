@@ -125,6 +125,17 @@ class TestInstaller(HookCase):
         self.assertEqual(self.hooks.read_text(), "{not json")
         self.assertFalse(self.bak.exists())
 
+    @unittest.skipIf(hasattr(os, "geteuid") and os.geteuid() == 0, "root ignores chmod permissions")
+    def test_unwritable_hooks_dir_fails_cleanly_without_traceback(self):
+        self.hooks.parent.chmod(0o555)
+        self.addCleanup(self.hooks.parent.chmod, 0o755)
+        code, out, err = self.run_script()
+        self.assertEqual(code, 1)
+        self.assertIn("error:", (out + err).lower())
+        self.assertIn(str(self.hooks), out + err)
+        self.assertNotIn("Traceback", out + err)
+        self.assertFalse(self.hooks.with_name("hooks.json.tmp").exists())
+
     def test_installed_command_is_quiet_when_the_engine_is_gone(self):
         self.run_script()
         command = self.own_commands()[0]

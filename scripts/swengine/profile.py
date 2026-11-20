@@ -41,27 +41,62 @@ def _fail(message):
     raise errors.EngineError(errors.PROFILE, message)
 
 
+class ProfileIOError(errors.EngineError):
+    """Filesystem failure accessing the shared style profile outside the workspace sandbox."""
+    def __init__(self, message):
+        super().__init__(errors.PROFILE, message)
+
+
+def _io_error(target, action, exc):
+    return ProfileIOError(
+        "cannot %s the style profile at %s (%s). The shared style profile sits outside the workspace "
+        "sandbox; rerun this command with non-workspace access approved (or allow access to %s)."
+        % (action, target, exc.strerror or exc, profile_dir()))
+
+
 def migrate():
     """Move the in-folder profile to the new location, once. Returns (notice, conflict)."""
     old, new = legacy_path(), path()
-    if not old.is_file():
+    try:
+        has_old = old.is_file()
+    except OSError as e:
+        raise _io_error(old, "read", e)
+    if not has_old:
         return None, False
-    if new.exists():
+    try:
+        has_new = new.exists()
+    except OSError as e:
+        raise _io_error(new, "read", e)
+    if has_new:
         return ("Both %s (old location) and %s exist. Nothing was overwritten; the author is asked which to keep."
                 % (old, new)), True
-    new.parent.mkdir(parents=True, exist_ok=True)
-    shutil.move(str(old), str(new))
+    try:
+        new.parent.mkdir(parents=True, exist_ok=True)
+        shutil.move(str(old), str(new))
+    except OSError as e:
+        raise _io_error(new, "move", e)
     return "Your style profile was moved from %s to %s so that updating the skill cannot delete it." % (old, new), False
 
 
 def resolve_conflict(choice):
     """Both files exist: nothing is lost. The loser is kept beside the profile as user-style.<name>.md."""
     old, new = legacy_path(), path()
-    if choice == "keep-profile":
-        shutil.move(str(old), str(new.with_name("user-style.in-folder.md")))
-    else:
-        shutil.move(str(new), str(new.with_name("user-style.previous.md")))
-        shutil.move(str(old), str(new))
+    try:
+        if choice == "keep-profile":
+            shutil.move(str(old), str(new.with_name("user-style.in-folder.md")))
+        else:
+            backup = new.with_name("user-style.previous.md")
+            shutil.move(str(new), str(backup))
+            try:
+                shutil.move(str(old), str(new))
+            except OSError:
+                try:
+                    shutil.move(str(backup), str(new))
+                except OSError:
+                    pass
+                raise
+    except OSError as e:
+        raise _io_error(new, "move", e)
 
 
 def bullets(text):
@@ -105,9 +140,36 @@ def _insert(lines, heading, bullet):
     lines.insert(last + 1, bullet)
 
 
+def exists():
+    """Whether the profile file exists; raises ProfileIOError if the folder cannot be inspected."""
+    target = path()
+    try:
+        return target.is_file()
+    except OSError as e:
+        raise _io_error(target, "read", e)
+
+
+def check_accessible():
+    """Verify the profile location can be inspected before creating a run; raises ProfileIOError if not."""
+    exists()
+
+
 def read():
     """The profile's text, or None when there is no profile yet."""
-    return path().read_text(encoding="utf-8") if path().is_file() else None
+    target = path()
+    try:
+        return target.read_text(encoding="utf-8") if target.is_file() else None
+    except OSError as e:
+        raise _io_error(target, "read", e)
+
+
+def read_bytes():
+    """The profile's raw bytes, or None when there is no profile yet."""
+    target = path()
+    try:
+        return target.read_bytes() if target.is_file() else None
+    except OSError as e:
+        raise _io_error(target, "read", e)
 
 
 def find_old(old):
@@ -119,8 +181,9 @@ def apply(ops, rules):
     """ops: [{op: add|replace|remove, heading, text, source, old}]. All or nothing.
     Returns one announcement line per op. rules: the 'profile' block of workflow.json."""
     target = path()
-    text = target.read_text(encoding="utf-8") if target.exists() else \
-        (SKILL_ROOT / "references" / "profile-template.md").read_text(encoding="utf-8")
+    text = read()
+    if text is None:
+        text = (SKILL_ROOT / "references" / "profile-template.md").read_text(encoding="utf-8")
     lines = text.rstrip("\n").split("\n")
     today, said = date.today().isoformat(), []
     for o in ops:
@@ -139,8 +202,15 @@ def apply(ops, rules):
         if len(ex) > rules["exemplar_limit"]:
             _fail("the profile already holds %d exemplars; which one should be dropped? Current exemplars: %s"
                   % (rules["exemplar_limit"], " | ".join(ex[:-1])))
-    target.parent.mkdir(parents=True, exist_ok=True)
     tmp = target.with_name(NAME + ".tmp")
-    tmp.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    os.replace(str(tmp), str(target))
+    try:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        tmp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        os.replace(str(tmp), str(target))
+    except OSError as e:
+        try:
+            tmp.unlink()
+        except OSError:
+            pass
+        raise _io_error(target, "write", e)
     return said

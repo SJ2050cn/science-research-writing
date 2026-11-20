@@ -21,8 +21,9 @@ SLUG = {"scan-profile": "scan", "study-profile": "study"}
 
 
 def pre_steps(preferences):
-    """Run the one-time move; return its notices and the profile steps that precede the main step."""
+    """Run the one-time move and verify profile access before a run folder is created; return notices and pre-steps."""
     notice, conflict = profile.migrate()
+    profile.check_accessible()
     return [notice] if notice else [], ["profile-conflict"] * bool(conflict) + ["save-preference"] * bool(preferences)
 
 
@@ -30,9 +31,9 @@ def start_task(task, agent, input_bytes, root):
     """Begin a scan-profile or study-profile run. input_bytes is None for a study.
     Call after pre_steps: the one-time move may bring the profile a study needs."""
     if task == "study-profile":
-        if not profile.path().is_file():
+        input_bytes = profile.read_bytes()
+        if input_bytes is None:
             raise errors.EngineError(errors.PROFILE, "no profile to study at %s" % profile.path())
-        input_bytes = profile.path().read_bytes()
     folder = runstore.Folder.create(root, SLUG[task], "profile", input_bytes)
     state = workflow.new_state(folder.id, {"mode": SLUG[task]}, [], agent)  # mode only names step overrides
     state.update(task=task, step={"id": MAIN[task], "attempt": 1})
@@ -44,6 +45,8 @@ def start_task(task, agent, input_bytes, root):
 def _refuse(fn, *a):
     try:
         return fn(*a)
+    except profile.ProfileIOError:
+        raise
     except errors.EngineError as e:
         raise Malformed(e.message)
 

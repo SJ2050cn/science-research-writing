@@ -14,7 +14,12 @@ from sandbox import LOCK_ENV, assert_sandboxed, sandbox_env
 SCRIPTS = (Path(__file__).resolve().parent.parent / "scripts").resolve()
 UNINSTALL = SCRIPTS / "uninstall.py"
 INSTALLER = SCRIPTS / "install_codex_hook.py"
+AG_INSTALLER = SCRIPTS / "install_antigravity_hook.py"
 OTHER = {"type": "command", "command": "/bin/echo other-tool"}
+AG_SIBLINGS = {
+    "lint-checker": {"PostToolUse": [{"matcher": "run_command", "hooks": [OTHER]}]},
+    "other-stop": {"Stop": [OTHER]},
+}
 NAME = "science-research-writing"
 
 
@@ -36,6 +41,10 @@ class UninstallCase(unittest.TestCase):
         self.hooks.parent.mkdir()
         self.hooks.write_text(json.dumps({"hooks": {"Stop": [{"hooks": [OTHER]}]}}))
         subprocess.run([sys.executable, str(INSTALLER)], check=True, capture_output=True)
+        self.ag_hooks = self.base / "antigravity" / "hooks.json"
+        self.ag_hooks.parent.mkdir()
+        self.ag_hooks.write_text(json.dumps(AG_SIBLINGS))
+        subprocess.run([sys.executable, str(AG_INSTALLER)], check=True, capture_output=True)
         self.logs = self.base / "proj" / ".agents" / "log" / NAME / "20260101-000000-revise-abstract"
         self.logs.mkdir(parents=True)
         (self.logs / "state.json").write_text("{}")
@@ -47,12 +56,17 @@ class UninstallCase(unittest.TestCase):
     def hook_commands(self):
         return [h["command"] for g in json.loads(self.hooks.read_text())["hooks"]["Stop"] for h in g["hooks"]]
 
+    def ag_data(self):
+        return json.loads(self.ag_hooks.read_text())
+
 
 class TestUninstall(UninstallCase):
     def test_keep_profile_removes_only_the_hook(self):
         code, out, err = self.run_script("--keep-profile")
         self.assertEqual(code, 0, err)
         self.assertEqual(self.hook_commands(), [OTHER["command"]])
+        self.assertEqual(self.ag_data(), AG_SIBLINGS)
+        self.assertIn("Antigravity", out)
         self.assertTrue(self.profile.exists())
 
     def test_remove_profile_deletes_it_and_its_backups(self):
@@ -75,8 +89,10 @@ class TestUninstall(UninstallCase):
 
     def test_contradicting_flags_are_refused_and_change_nothing(self):
         before = self.hooks.read_bytes()
+        ag_before = self.ag_hooks.read_bytes()
         self.assertNotEqual(self.run_script("--keep-profile", "--remove-profile")[0], 0)
         self.assertEqual(self.hooks.read_bytes(), before)
+        self.assertEqual(self.ag_hooks.read_bytes(), ag_before)
         self.assertTrue(self.profile.exists())
 
     def test_never_touches_project_logs(self):
@@ -98,9 +114,42 @@ class TestUninstall(UninstallCase):
 
     def test_missing_hooks_file_and_missing_profile_are_fine(self):
         self.hooks.unlink()
+        self.ag_hooks.unlink()
         self.profile.unlink()
         self.assertEqual(self.run_script("--remove-profile")[0], 0)
         self.assertFalse(self.hooks.exists())
+        self.assertFalse(self.ag_hooks.exists())
+
+    def test_succeeds_when_only_one_hooks_file_exists(self):
+        # Only Antigravity hooks file exists (Codex absent).
+        self.hooks.unlink()
+        code, out, err = self.run_script("--keep-profile")
+        self.assertEqual(code, 0, err)
+        self.assertFalse(self.hooks.exists())
+        self.assertEqual(self.ag_data(), AG_SIBLINGS)
+        self.assertIn("Removed the Antigravity guard hook", out)
+
+        # Only Codex hooks file exists (Antigravity absent).
+        self.ag_hooks.unlink()
+        self.hooks.write_text(json.dumps({"hooks": {"Stop": [{"hooks": [OTHER]}]}}))
+        subprocess.run([sys.executable, str(INSTALLER)], check=True, capture_output=True)
+        code, out, err = self.run_script("--keep-profile")
+        self.assertEqual(code, 0, err)
+        self.assertFalse(self.ag_hooks.exists())
+        self.assertEqual(self.hook_commands(), [OTHER["command"]])
+        self.assertIn("Removed the Codex guard hook", out)
+        self.assertIn("No Antigravity guard hook to remove", out)
+
+    def test_broken_antigravity_hooks_file_is_reported_and_the_rest_still_runs(self):
+        self.ag_hooks.write_text('{"a": 1,}\n')
+        code, out, err = self.run_script("--remove-profile")
+        self.assertEqual(code, 1)
+        self.assertIn("Antigravity", err)
+        self.assertNotIn("Traceback", err)
+        self.assertEqual(self.ag_hooks.read_text(), '{"a": 1,}\n')  # left unchanged
+        self.assertEqual(self.hook_commands(), [OTHER["command"]])  # Codex hook still removed
+        self.assertFalse(self.profile.exists())
+        self.assertIn('rm -rf "%s"' % SCRIPTS.parent, out)
 
 
 class TestRemovalCommand(UninstallCase):
@@ -124,6 +173,25 @@ class TestRemovalCommand(UninstallCase):
     def test_rm_commands_when_there_is_no_lock_file(self):
         out = self.run_script("--keep-profile")[1]
         self.assertIn('rm -rf "%s"' % SCRIPTS.parent, out)
+
+    def test_rm_commands_include_antigravity_symlink_for_local_install(self):
+        Path(os.environ[LOCK_ENV]).write_text(json.dumps({"version": 3, "skills": {"other": {}}}))
+        link = self.base / "home" / ".gemini" / "config" / "skills" / NAME
+        link.parent.mkdir(parents=True)
+        link.symlink_to(SCRIPTS.parent)
+        out = self.run_script("--keep-profile")[1]
+        self.assertNotIn("npx skills", out)
+        self.assertIn('rm "%s"' % link, out)
+        self.assertIn('rm -rf "%s"' % SCRIPTS.parent, out)
+        self.assertTrue(link.is_symlink())  # printed, never run
+
+    def test_rm_commands_include_antigravity_folder_for_local_install(self):
+        folder = self.base / "home" / ".gemini" / "config" / "skills" / NAME
+        folder.mkdir(parents=True)
+        out = self.run_script("--keep-profile")[1]
+        self.assertIn('rm -rf "%s"' % folder, out)
+        self.assertIn('rm -rf "%s"' % SCRIPTS.parent, out)
+        self.assertTrue(folder.is_dir())  # printed, never run
 
 
 if __name__ == "__main__":
